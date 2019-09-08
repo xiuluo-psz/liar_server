@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.common.server.mapper.UserMapper">
+	<select id="findByKeyAndPassword" parameterType="java.util.Map"
+		resultType="com.common.server.entity.UserEntity">
+		SELECT * FROM user
+		where
+		delete_flag = false
+		and password = #{password}
+		<if test="phoneNumber != null">
+			and phone_number = #{phoneNumber}
+		</if>
+		<if test="emial != null">
+			and email = #{email}
+		</if>
+	</select>
+	<select id="findById" parameterType="java.lang.String"
+		resultType="com.common.server.entity.UserEntity">
+		SELECT * FROM user
+		where
+		user_id = #{userId}
+	</select>
+</mapper>
