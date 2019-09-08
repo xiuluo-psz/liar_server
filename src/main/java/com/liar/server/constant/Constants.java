@@ -1,6 +1,5 @@
 package com.liar.server.constant;
 
 public class Constants {
-	public static final String CODE_SUCCESS = "200";
-	public static final String CODE_FAILED = "299";
+	static final String URL_PREFIX = "/api";
 }

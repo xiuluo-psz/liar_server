@@ -1,11 +1,10 @@
 package com.liar.server.model;
 
-import com.liar.server.constant.Constants;
-import com.liar.server.constant.Message;
+import com.liar.server.constant.Status;
 
 public class ResultModel {
-	String code = Constants.CODE_FAILED;
-	String msg = Message.MSG_FAILED;
+	String code = Status.CODE_FAILED;
+	String msg = Status.MSG_FAILED;
 	Object data;
 
 	public String getCode() {

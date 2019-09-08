@@ -10,7 +10,7 @@ import com.liar.server.model.ResultModel;
 public class GloablExceptionHandler {
 	@ResponseBody
 	@ExceptionHandler(Exception.class)
-	public Object handleException(Exception e) {
+	public ResultModel handleException(Exception e) {
 		String msg = e.getMessage();
 		if (msg == null || msg.equals("")) {
 			msg = "服务器出错";
