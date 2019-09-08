@@ -1,6 +1,5 @@
 package com.liar.server.model;
 
-
 import com.liar.server.constant.Constants;
 import com.liar.server.constant.Message;
 
