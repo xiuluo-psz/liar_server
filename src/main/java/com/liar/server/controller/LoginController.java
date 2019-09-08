@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.liar.server.constant.Status;
 import com.liar.server.entity.UserEntity;
 import com.liar.server.model.LoginModel;
 import com.liar.server.model.ResultModel;
@@ -34,11 +35,11 @@ public class LoginController {
 		UserEntity user = new UserEntity();
 		try {
 			user = userService.findByKeyAndPassword(pwd, phoneNumber, email);
-			result.setCode("200");
-			result.setMsg("success");
+			result.setCode(Status.CODE_SUCCESS);
+			result.setMsg(Status.MEG_SUCCESS);
 			result.setData(user);
 		} catch (Exception e) {
-			result.setCode("501");
+			result.setCode(Status.CODE_DB);
 			result.setMsg(e.getMessage());
 		}
 		return result;

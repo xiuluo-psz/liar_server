@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.liar.server.mapper")
+//@ComponentScan(basePackages={"com.liar.server"})
 public class LiarServerApplication {
 
 	public static void main(String[] args) {

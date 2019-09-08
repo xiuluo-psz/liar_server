@@ -3,6 +3,7 @@ package com.liar.server.service.impl;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +21,13 @@ public class UserServiceImpl implements UserService {
 	public UserEntity findByKeyAndPassword(String password, String phoneNumber, String email) {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("password", password);
-		if (phoneNumber != null) {
+		if (StringUtils.isNotEmpty(phoneNumber)) {
 			params.put("phoneNumber", phoneNumber);
 		}
-		if (email != null) {
+		if (StringUtils.isNotEmpty(email)) {
 			params.put("email", email);
 		}
-		UserEntity uu = userMapper.findByKeyAndPassword(params);
-		return uu;
+		return userMapper.findByKeyAndPassword(params);
 	}
 
 	@Override
