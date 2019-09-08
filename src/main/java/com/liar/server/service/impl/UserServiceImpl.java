@@ -35,4 +35,9 @@ public class UserServiceImpl implements UserService {
 		return userMapper.findById(userId);
 	}
 
+	@Override
+	public UserEntity findByPhone(String phoneNumber) {
+		return userMapper.findByPhone(phoneNumber);
+	}
+
 }

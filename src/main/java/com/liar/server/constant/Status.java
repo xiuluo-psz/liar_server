@@ -5,11 +5,16 @@ public class Status {
 	public static final String CODE_SUCCESS = "200";
 	public static final String CODE_FAILED = "299";
 	public static final String CODE_DB = "301";
-	public static final String CODE_UNKNOWN = "999";
+	public static final String CODE_UNAUTHORIZED = "401";
+	public static final String CODE_UNKNOWN = "500";
 
 	// message
 	public static final String MEG_SUCCESS = "success";
 	public static final String MSG_FAILED = "failed";
+	public static final String MSG_NEEDPARAMETERS = "need parameters";
+	public static final String MSG_UNAUTHORIZED = "unauthorized";
+	public static final String MSG_NOTOKEN = "no token";
+	public static final String MSG_UNEXIST = "user does not exist";
 	public static final String MSG_UNKNOWN = "unknown problem on server";
 
 }
