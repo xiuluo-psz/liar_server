@@ -1,5 +1,7 @@
 package com.liar.server.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.liar.server.annotation.Authentication;
+import com.liar.server.constant.Constants;
 import com.liar.server.constant.Status;
 import com.liar.server.entity.UserEntity;
 import com.liar.server.model.LoginModel;
@@ -26,7 +29,6 @@ public class LoginController {
 	private TokenService tokenService;
 
 	@PostMapping(value = "/login")
-//	@Authentication
 	public ResultModel login(@RequestBody LoginModel login) {
 		ResultModel result = new ResultModel();
 
@@ -52,18 +54,26 @@ public class LoginController {
 			login.setToken(tokenService.getToken(user));
 
 			result.setCode(Status.CODE_SUCCESS);
-			result.setMsg(Status.MEG_SUCCESS);
+			result.setMsg(Status.MSG_SUCCESS);
 			result.setData(login);
-		} catch (Exception e) {
-			result.setCode(Status.CODE_DB);
-			result.setMsg(e.getMessage());
+		} 
+		catch(NullPointerException e) {
+			result.setCode(Status.CODE_UNAUTHORIZED);
+			result.setMsg(Status.MSG_NOUSER);
 		}
 		return result;
 	}
 
-	@PostMapping(value = "/test")
+	@PostMapping(value = "/logdel")
 	@Authentication
-	public String test() {
-		return "test";
+	public ResultModel logdel(HttpServletRequest httpServletRequest,@RequestBody LoginModel login) {
+		String token = httpServletRequest.getHeader(Constants.AUTHORIZATION);
+		String userId = tokenService.getUUID(token);
+//		userService.updateUser(userId);
+		//TODO change deleFlag = true, then save
+		ResultModel result = new ResultModel();
+		result.setCode(Status.CODE_SUCCESS);
+		result.setMsg(Status.MSG_SUCCESS);
+		return result;
 	}
 }

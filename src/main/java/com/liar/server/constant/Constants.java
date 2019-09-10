@@ -8,5 +8,5 @@ public class Constants {
 	public static final String ISSUER = "ISSUER";
 	public static final String SUBJECT = "SUBJECT";
 	public static final String JWTID = "JWTID";
-	
+	public static final String UUID = "uuid";
 }

@@ -40,7 +40,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 //				return true;
 //			}
 //		}
-
 		boolean verify = true;
 		// 检查有没有需要用户权限的注解
 		if (method.isAnnotationPresent(Authentication.class)) {

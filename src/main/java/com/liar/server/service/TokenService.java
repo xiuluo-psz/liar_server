@@ -6,4 +6,6 @@ public interface TokenService {
 	public String getToken(UserEntity user);
 
 	public boolean verifyToken(String token);
+
+	public String getUUID(String token);
 }

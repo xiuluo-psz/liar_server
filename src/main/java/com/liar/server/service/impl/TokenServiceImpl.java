@@ -1,30 +1,37 @@
 package com.liar.server.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
 
 import com.liar.server.constant.Constants;
 import com.liar.server.entity.UserEntity;
 import com.liar.server.service.TokenService;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Service
 public class TokenServiceImpl implements TokenService {
-	
+
 	@Override
 	public String getToken(UserEntity user) {
 		String token = "";
 //		token = JWT.create().withAudience(Constants.AUDIENCE).withJWTId(Constants.JWTID).withSubject(Constants.SUBJECT)
 //				.withIssuer(Constants.ISSUER).sign(Algorithm.HMAC256(Constants.SIGN_KEY));
+		Map<String, Object> claims = new HashMap<String, Object>();
+		claims.put(Constants.UUID, user.getUserId());
 		token = Jwts.builder().setIssuer(Constants.ISSUER).setAudience(Constants.AUDIENCE).setId(Constants.JWTID)
-				.setSubject(Constants.SUBJECT).signWith(SignatureAlgorithm.HS512, Constants.SIGN_KEY).compact();
+				.setSubject(Constants.SUBJECT).addClaims(claims).signWith(SignatureAlgorithm.HS512, Constants.SIGN_KEY)
+				.compact();
 		return token;
 	}
 
 	@Override
 	public boolean verifyToken(String token) {
-		try {		
+		try {
 //			JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(Constants.SIGN_KEY)).withIssuer(Constants.ISSUER)
 //					.withJWTId(Constants.JWTID).withAudience(Constants.AUDIENCE).withSubject(Constants.SUBJECT).build();
 //			jwtVerifier.verify(token);
@@ -36,5 +43,12 @@ public class TokenServiceImpl implements TokenService {
 		}
 
 		return true;
+	}
+
+	@Override
+	public String getUUID(String token) {
+		Claims body = Jwts.parser().setSigningKey(Constants.SIGN_KEY).parseClaimsJws(token).getBody();
+		String uuid = body.get(Constants.UUID).toString();
+		return uuid;
 	}
 }

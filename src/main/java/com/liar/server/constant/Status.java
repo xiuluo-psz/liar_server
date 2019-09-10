@@ -9,10 +9,11 @@ public class Status {
 	public static final String CODE_UNKNOWN = "500";
 
 	// message
-	public static final String MEG_SUCCESS = "success";
+	public static final String MSG_SUCCESS = "success";
 	public static final String MSG_FAILED = "failed";
 	public static final String MSG_NEEDPARAMETERS = "need parameters";
 	public static final String MSG_UNAUTHORIZED = "unauthorized";
+	public static final String MSG_NOUSER = "no user";
 	public static final String MSG_UNKNOWN = "unknown problem on server";
 
 }
