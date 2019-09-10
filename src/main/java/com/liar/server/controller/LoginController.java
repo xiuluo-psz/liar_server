@@ -42,6 +42,7 @@ public class LoginController {
 		UserEntity user = new UserEntity();
 		try {
 			user = userService.findByKeyAndPassword(pwd, phoneNumber, email);
+			login.setUserId(user.getUserId());
 			login.setUserName(user.getUserName());
 			login.setPhoneNumber(user.getPhoneNumber());
 			login.setEmail(user.getEmail());
