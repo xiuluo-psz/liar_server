@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.liar.server.annotation.Authentication;
 import com.liar.server.constant.Status;
 import com.liar.server.entity.UserEntity;
 import com.liar.server.model.LoginModel;
@@ -25,6 +26,7 @@ public class LoginController {
 	private TokenService tokenService;
 
 	@PostMapping(value = "/login")
+//	@Authentication
 	public ResultModel login(@RequestBody LoginModel login) {
 		ResultModel result = new ResultModel();
 
@@ -58,4 +60,9 @@ public class LoginController {
 		return result;
 	}
 
+	@PostMapping(value = "/test")
+	@Authentication
+	public String test() {
+		return "test";
+	}
 }

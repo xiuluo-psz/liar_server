@@ -10,31 +10,29 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.liar.server.annotation.Authentication;
 import com.liar.server.constant.Constants;
 import com.liar.server.constant.Status;
-import com.liar.server.entity.UserEntity;
-import com.liar.server.service.UserService;
+import com.liar.server.service.TokenService;
 
 public class AuthenticationInterceptor implements HandlerInterceptor {
+
 	@Autowired
-	private UserService userService;
+	private TokenService tokenService;
 
 	@Override
 	public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
 			Object object) throws Exception {
-		String token = httpServletRequest.getHeader(Constants.AUTHORIZATION);// 从请求头中取出 token
 		// 如果不是映射到方法直接通过
 		if (!(object instanceof HandlerMethod)) {
 			return true;
 		}
+
+		// 从请求头中取出 token
+		String token = httpServletRequest.getHeader(Constants.AUTHORIZATION);
 		HandlerMethod handlerMethod = (HandlerMethod) object;
 		Method method = handlerMethod.getMethod();
+
 		// 检查是否有passToken注释，有则跳过认证
 //		if (method.isAnnotationPresent(PassToken.class)) {
 //			PassToken passToken = method.getAnnotation(PassToken.class);
@@ -42,33 +40,17 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 //				return true;
 //			}
 //		}
+
+		boolean verify = true;
 		// 检查有没有需要用户权限的注解
 		if (method.isAnnotationPresent(Authentication.class)) {
 			Authentication authentication = method.getAnnotation(Authentication.class);
 			if (authentication.required()) {
-				// 执行认证
-				if (token == null) {
-					throw new RuntimeException(Status.MSG_NOTOKEN);
-				}
-				// 获取 token 中的 user id
-				String phoneNumber = "";
-				try {
-					phoneNumber = JWT.decode(token).getAudience().get(0);
-				} catch (JWTDecodeException j) {
-					throw new RuntimeException(Status.MSG_UNAUTHORIZED);
-				}
-				UserEntity user = userService.findByPhone(phoneNumber);
-				if (user == null) {
-					throw new RuntimeException(Status.MSG_UNEXIST);
-				}
-				// 验证 token
-				JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
-				try {
-					jwtVerifier.verify(token);
-				} catch (JWTVerificationException e) {
-					throw new RuntimeException(Status.MSG_UNAUTHORIZED);
-				}
+				verify = tokenService.verifyToken(token);
 			}
+		}
+		if (!verify) {
+			throw new RuntimeException(Status.MSG_UNAUTHORIZED);
 		}
 		return true;
 	}
