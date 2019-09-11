@@ -15,5 +15,6 @@ public class Status {
 	public static final String MSG_UNAUTHORIZED = "unauthorized";
 	public static final String MSG_NOUSER = "no user";
 	public static final String MSG_UNKNOWN = "unknown problem on server";
+	public static final String MSG_DELFAILED = "token does not match current user";
 
 }

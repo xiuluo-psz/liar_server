@@ -1,6 +1,7 @@
 package com.liar.server.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -65,12 +66,20 @@ public class LoginController {
 
 	@PostMapping(value = "/logdel")
 	@Authentication
-	public ResultModel logdel(HttpServletRequest httpServletRequest, @RequestBody LoginModel login) {
+	public ResultModel logdel(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+			@RequestBody LoginModel login) {
+		ResultModel result = new ResultModel();
+
 		String token = httpServletRequest.getHeader(Constants.AUTHORIZATION);
 		String userId = tokenService.getUUID(token);
-		int deleUser = userService.deleUser(userId);
 
-		ResultModel result = new ResultModel();
+		if (!userId.equals(login.getUserId())) {
+			result.setCode(Status.CODE_FAILED);
+			result.setMsg(Status.MSG_DELFAILED);
+			return result;
+		}
+
+		int deleUser = userService.deleUser(userId);
 		if (deleUser == 1) {
 			result.setCode(Status.CODE_SUCCESS);
 			result.setMsg(Status.MSG_SUCCESS);
