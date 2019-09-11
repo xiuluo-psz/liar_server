@@ -40,4 +40,8 @@ public class UserServiceImpl implements UserService {
 		return userMapper.findByPhone(phoneNumber);
 	}
 
+	@Override
+	public int deleUser(String userId) {
+		return userMapper.deleUser(userId);
+	}
 }

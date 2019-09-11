@@ -56,8 +56,7 @@ public class LoginController {
 			result.setCode(Status.CODE_SUCCESS);
 			result.setMsg(Status.MSG_SUCCESS);
 			result.setData(login);
-		} 
-		catch(NullPointerException e) {
+		} catch (NullPointerException e) {
 			result.setCode(Status.CODE_UNAUTHORIZED);
 			result.setMsg(Status.MSG_NOUSER);
 		}
@@ -66,14 +65,19 @@ public class LoginController {
 
 	@PostMapping(value = "/logdel")
 	@Authentication
-	public ResultModel logdel(HttpServletRequest httpServletRequest,@RequestBody LoginModel login) {
+	public ResultModel logdel(HttpServletRequest httpServletRequest, @RequestBody LoginModel login) {
 		String token = httpServletRequest.getHeader(Constants.AUTHORIZATION);
 		String userId = tokenService.getUUID(token);
-//		userService.updateUser(userId);
-		//TODO change deleFlag = true, then save
+		int deleUser = userService.deleUser(userId);
+
 		ResultModel result = new ResultModel();
-		result.setCode(Status.CODE_SUCCESS);
-		result.setMsg(Status.MSG_SUCCESS);
+		if (deleUser == 1) {
+			result.setCode(Status.CODE_SUCCESS);
+			result.setMsg(Status.MSG_SUCCESS);
+		} else {
+			result.setCode(Status.CODE_FAILED);
+			result.setMsg(Status.MSG_FAILED);
+		}
 		return result;
 	}
 }

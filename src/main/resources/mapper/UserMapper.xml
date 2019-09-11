@@ -26,4 +26,9 @@
 		WHERE
 		phone_number = #{phoneNumber}
 	</select>
+	<update id="deleUser" parameterType="java.lang.String">
+		UPDATE
+		user SET delete_flag =
+		true WHERE user_id = #{userId}
+	</update>
 </mapper>
