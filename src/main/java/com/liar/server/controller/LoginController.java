@@ -88,7 +88,7 @@ public class LoginController {
 			result.setMsg(Status.MSG_SUCCESS);
 		} else {
 			result.setCode(Status.CODE_FAILED);
-			result.setMsg(Status.MSG_FAILED);
+			result.setMsg(Status.MSG_USERDELETED);
 		}
 		return result;
 	}

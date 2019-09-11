@@ -29,6 +29,6 @@
 	<update id="deleUser" parameterType="java.lang.String">
 		UPDATE
 		user SET delete_flag =
-		true WHERE user_id = #{userId}
+		true WHERE user_id = #{userId} and delete_flag = false
 	</update>
 </mapper>
