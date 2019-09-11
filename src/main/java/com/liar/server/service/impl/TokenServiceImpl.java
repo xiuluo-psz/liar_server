@@ -1,5 +1,6 @@
 package com.liar.server.service.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,11 +22,12 @@ public class TokenServiceImpl implements TokenService {
 		String token = "";
 //		token = JWT.create().withAudience(Constants.AUDIENCE).withJWTId(Constants.JWTID).withSubject(Constants.SUBJECT)
 //				.withIssuer(Constants.ISSUER).sign(Algorithm.HMAC256(Constants.SIGN_KEY));
+		Date expiresDate = new Date(System.currentTimeMillis() + Constants.DEATH_TIME);
 		Map<String, Object> claims = new HashMap<String, Object>();
 		claims.put(Constants.UUID, user.getUserId());
 		token = Jwts.builder().setIssuer(Constants.ISSUER).setAudience(Constants.AUDIENCE).setId(Constants.JWTID)
-				.setSubject(Constants.SUBJECT).addClaims(claims).signWith(SignatureAlgorithm.HS512, Constants.SIGN_KEY)
-				.compact();
+				.setSubject(Constants.SUBJECT).setExpiration(expiresDate).addClaims(claims)
+				.signWith(SignatureAlgorithm.HS512, Constants.SIGN_KEY).compact();
 		return token;
 	}
 
@@ -45,6 +47,11 @@ public class TokenServiceImpl implements TokenService {
 		return true;
 	}
 
+	@Override
+	public String refreshToken(UserEntity user) {
+		return getToken(user);
+	}
+	
 	@Override
 	public String getUUID(String token) {
 		Claims body = Jwts.parser().setSigningKey(Constants.SIGN_KEY).parseClaimsJws(token).getBody();

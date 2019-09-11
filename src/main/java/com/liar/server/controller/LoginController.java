@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.liar.server.annotation.Authentication;
@@ -21,6 +22,7 @@ import com.liar.server.service.UserService;
 
 @CrossOrigin
 @RestController
+@RequestMapping(value = "Login")
 public class LoginController {
 
 	@Autowired
@@ -53,6 +55,7 @@ public class LoginController {
 			login.setImage(user.getImage());
 			login.setVersion(user.getVersion());
 			login.setToken(tokenService.getToken(user));
+			login.setAllowDay(Constants.ALLOW_DAY);
 
 			result.setCode(Status.CODE_SUCCESS);
 			result.setMsg(Status.MSG_SUCCESS);
