@@ -1,5 +1,8 @@
 package com.liar.server.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,9 +40,12 @@ public class TokenController {
 			result.setMsg(Status.MSG_DELFAILED);
 			return result;
 		}
+		String newToken = tokenService.refreshToken(user);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("token", newToken);
 		result.setCode(Status.CODE_SUCCESS);
 		result.setMsg(Status.MSG_SUCCESS);
-		result.setData(tokenService.refreshToken(user));
+		result.setData(map);
 		return result;
 	}
 }
