@@ -16,4 +16,6 @@ public interface UserMapper {
 	public UserEntity findByPhone(String phoneNumber);
 
 	public int deleUser(String userId);
+	
+	public int addUser(Map<String, String> params);
 }

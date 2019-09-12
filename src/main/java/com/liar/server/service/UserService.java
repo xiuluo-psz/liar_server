@@ -11,5 +11,7 @@ public interface UserService {
 	public UserEntity findByPhone(String phoneNumber);
 
 	public int deleUser(String userId);
+	
+	public int addUser(UserEntity user);
 
 }

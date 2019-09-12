@@ -70,13 +70,13 @@ public class LoginController {
 	@PostMapping(value = "/logdel")
 	@Authentication
 	public ResultModel logdel(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
-			@RequestBody LoginModel login) {
+			@RequestBody UserEntity user) {
 		ResultModel result = new ResultModel();
 
 		String token = httpServletRequest.getHeader(Constants.AUTHORIZATION);
 		String userId = tokenService.getUUID(token);
 
-		if (!userId.equals(login.getUserId())) {
+		if (!userId.equals(user.getUserId())) {
 			result.setCode(Status.CODE_FAILED);
 			result.setMsg(Status.MSG_DELFAILED);
 			return result;

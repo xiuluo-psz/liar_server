@@ -31,4 +31,10 @@
 		user SET delete_flag =
 		true WHERE user_id = #{userId} and delete_flag = false
 	</update>
+	<insert id="addUser" parameterType="java.util.Map">
+		Insert INTO
+		user(user_id,user_name,
+		email, password, delete_flag, version)
+		VALUES(UUID(),#{userName},#{email},#{password},false,NOW())
+	</insert>
 </mapper>

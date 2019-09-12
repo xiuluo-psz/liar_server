@@ -44,4 +44,13 @@ public class UserServiceImpl implements UserService {
 	public int deleUser(String userId) {
 		return userMapper.deleUser(userId);
 	}
+	
+	@Override
+	public int addUser(UserEntity user) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("userName", user.getUserName());
+		params.put("email", user.getEmail());
+		params.put("password", user.getPassword());
+		return userMapper.addUser(params);
+	}
 }
