@@ -60,7 +60,7 @@ public class LoginController {
 		login.setImage(user.getImage());
 		login.setVersion(user.getVersion());
 		login.setToken(tokenService.getToken(user));
-		login.setAllowDay(Constants.ALLOW_DAY);
+		login.setAccessToken(Constants.ACCESS_TOKEN);
 
 		result.setCode(Status.CODE_SUCCESS);
 		result.setMsg(Status.MSG_SUCCESS);

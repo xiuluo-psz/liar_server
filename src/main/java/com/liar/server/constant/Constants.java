@@ -3,7 +3,7 @@ package com.liar.server.constant;
 public class Constants {
 	public static final String URL_PREFIX = "/api";
 	public static final long DEATH_TIME = 14 * 24 * 60 * 60 * 1000L;
-	public static final int ALLOW_DAY = 14;
+	public static final int ACCESS_TOKEN = 14;
 	public static final String AUTHORIZATION = "Authorization";
 	public static final String SIGN_KEY = "com.liar.server";
 	public static final String AUDIENCE = "AUDIENCE";

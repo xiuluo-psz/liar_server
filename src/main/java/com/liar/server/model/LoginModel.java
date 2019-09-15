@@ -4,15 +4,15 @@ import com.liar.server.entity.UserEntity;
 
 public class LoginModel extends UserEntity {
 
-	private int allowDay;
+	private int accessToken;
 	private String token;
 
-	public int getAllowDay() {
-		return allowDay;
+	public int getAccessToken() {
+		return accessToken;
 	}
 
-	public void setAllowDay(int allowDay) {
-		this.allowDay = allowDay;
+	public void setAccessToken(int accessToken) {
+		this.accessToken = accessToken;
 	}
 
 	public String getToken() {
