@@ -44,26 +44,27 @@ public class LoginController {
 			result.setMsg(Status.MSG_NEEDPARAMETERS);
 			return result;
 		}
-		UserEntity user = new UserEntity();
-		try {
-			user = userService.findByKeyAndPassword(pwd, phoneNumber, email);
-			login.setUserId(user.getUserId());
-			login.setUserName(user.getUserName());
-			login.setPhoneNumber(user.getPhoneNumber());
-			login.setEmail(user.getEmail());
-			login.setDeleteFlag(user.isDeleteFlag());
-			login.setImage(user.getImage());
-			login.setVersion(user.getVersion());
-			login.setToken(tokenService.getToken(user));
-			login.setAllowDay(Constants.ALLOW_DAY);
 
-			result.setCode(Status.CODE_SUCCESS);
-			result.setMsg(Status.MSG_SUCCESS);
-			result.setData(login);
-		} catch (NullPointerException e) {
+		UserEntity user = userService.findByKeyAndPassword(pwd, phoneNumber, email);
+		if (user == null) {
 			result.setCode(Status.CODE_UNAUTHORIZED);
 			result.setMsg(Status.MSG_NOUSER);
+			return result;
 		}
+
+		login.setUserId(user.getUserId());
+		login.setUserName(user.getUserName());
+		login.setPhoneNumber(user.getPhoneNumber());
+		login.setEmail(user.getEmail());
+		login.setDeleteFlag(user.isDeleteFlag());
+		login.setImage(user.getImage());
+		login.setVersion(user.getVersion());
+		login.setToken(tokenService.getToken(user));
+		login.setAllowDay(Constants.ALLOW_DAY);
+
+		result.setCode(Status.CODE_SUCCESS);
+		result.setMsg(Status.MSG_SUCCESS);
+		result.setData(login);
 		return result;
 	}
 

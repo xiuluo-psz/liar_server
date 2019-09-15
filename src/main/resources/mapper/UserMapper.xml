@@ -37,4 +37,27 @@
 		email, password, delete_flag, version)
 		VALUES(UUID(),#{userName},#{email},#{password},false,NOW())
 	</insert>
+	<update id="updateUser"
+		parameterType="com.liar.server.entity.UserEntity">
+		UPDATE user SET version = NOW()
+		<if test="userName != null">
+			,user_name = #{userName}
+		</if>
+		<if test="phoneNumber != null">
+			,phone_number = #{phoneNumber}
+		</if>
+		<if test="email != null">
+			,email = #{email}
+		</if>
+		<if test="password != null">
+			,password = #{password}
+		</if>
+		<if test="image != null">
+			,image = #{image}
+		</if>
+		<if test="deleteFlag != null">
+			,delete_flag = #{deleteFlag}
+		</if>
+		WHERE user_id = #{userId}
+	</update>
 </mapper>

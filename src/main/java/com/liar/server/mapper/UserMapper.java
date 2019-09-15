@@ -18,4 +18,6 @@ public interface UserMapper {
 	public int deleUser(String userId);
 	
 	public int addUser(Map<String, String> params);
+	
+	public int updateUser(UserEntity user);
 }
