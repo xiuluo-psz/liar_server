@@ -5,7 +5,7 @@ import com.liar.server.entity.UserEntity;
 public class LoginModel extends UserEntity {
 
 	private String password;
-	private int accessToken;
+	private long accessTime;
 	private String token;
 
 	public String getPassword() {
@@ -16,12 +16,12 @@ public class LoginModel extends UserEntity {
 		this.password = password;
 	}
 
-	public int getAccessToken() {
-		return accessToken;
+	public long getAccessTime() {
+		return accessTime;
 	}
 
-	public void setAccessToken(int accessToken) {
-		this.accessToken = accessToken;
+	public void setAccessTime(long accessTime) {
+		this.accessTime = accessTime;
 	}
 
 	public String getToken() {

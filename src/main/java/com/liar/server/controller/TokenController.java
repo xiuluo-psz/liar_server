@@ -41,7 +41,8 @@ public class TokenController {
 			return result;
 		}
 		String newToken = tokenService.refreshToken(user);
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("accessTime", Constants.DEATH_TIME + System.currentTimeMillis());
 		map.put("token", newToken);
 		result.setCode(Status.CODE_SUCCESS);
 		result.setMsg(Status.MSG_SUCCESS);

@@ -71,7 +71,7 @@ public class LoginController {
 		login.setDeleteFlag(user.isDeleteFlag());
 		login.setVersion(user.getVersion());
 		login.setToken(tokenService.getToken(user));
-		login.setAccessToken(Constants.ACCESS_TOKEN);
+		login.setAccessTime(Constants.DEATH_TIME + System.currentTimeMillis());
 
 		result.setCode(Status.CODE_SUCCESS);
 		result.setMsg(Status.MSG_SUCCESS);
