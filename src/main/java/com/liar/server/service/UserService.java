@@ -6,6 +6,8 @@ public interface UserService {
 
 	public UserEntity findByKeyAndPassword(String password, String phoneNumber, String email);
 
+	public UserEntity findByEmailOrPhone(String email, String phoneNumber);
+
 	public UserEntity findById(String userId);
 
 	public UserEntity findByPhone(String phoneNumber);

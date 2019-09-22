@@ -6,12 +6,25 @@
 		SELECT * FROM user
 		WHERE
 		delete_flag = false
-		AND password = #{password}
+		AND password_md5 =
+		#{passwordMD5}
 		<if test="phoneNumber != null">
 			AND phone_number = #{phoneNumber}
 		</if>
 		<if test="email != null">
 			AND email = #{email}
+		</if>
+	</select>
+	<select id="findByEmailOrPhone" parameterType="java.util.Map"
+		resultType="com.liar.server.entity.UserEntity">
+		SELECT * FROM user
+		WHERE
+		delete_flag = false
+		<if test="email != null">
+			AND email = #{email}
+		</if>
+		<if test="phoneNumber != null">
+			AND phone_number = #{phoneNumber}
 		</if>
 	</select>
 	<select id="findById" parameterType="java.lang.String"
@@ -34,8 +47,9 @@
 	<insert id="addUser" parameterType="java.util.Map">
 		Insert INTO
 		user(user_id,user_name,
-		email, password, delete_flag, version)
-		VALUES(UUID(),#{userName},#{email},#{password},false,NOW())
+		email, password_md5, salt, delete_flag,
+		version)
+		VALUES(UUID(),#{userName},#{email},#{passwordMD5},#{salt},false,NOW())
 	</insert>
 	<update id="updateUser"
 		parameterType="com.liar.server.entity.UserEntity">
@@ -49,8 +63,8 @@
 		<if test="email != null">
 			,email = #{email}
 		</if>
-		<if test="password != null">
-			,password = #{password}
+		<if test="passwordMD5 != null">
+			,password_md5 = #{passwordMD5}
 		</if>
 		<if test="image != null">
 			,image = #{image}

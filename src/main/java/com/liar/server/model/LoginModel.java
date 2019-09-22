@@ -4,8 +4,17 @@ import com.liar.server.entity.UserEntity;
 
 public class LoginModel extends UserEntity {
 
+	private String password;
 	private int accessToken;
 	private String token;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public int getAccessToken() {
 		return accessToken;

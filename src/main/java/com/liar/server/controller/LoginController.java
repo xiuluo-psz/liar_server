@@ -19,6 +19,7 @@ import com.liar.server.model.LoginModel;
 import com.liar.server.model.ResultModel;
 import com.liar.server.service.TokenService;
 import com.liar.server.service.UserService;
+import com.liar.server.util.EncryptionUtils;
 
 @CrossOrigin
 @RestController
@@ -45,10 +46,18 @@ public class LoginController {
 			return result;
 		}
 
-		UserEntity user = userService.findByKeyAndPassword(pwd, phoneNumber, email);
+		UserEntity user = userService.findByEmailOrPhone(email, phoneNumber);
 		if (user == null) {
 			result.setCode(Status.CODE_UNAUTHORIZED);
 			result.setMsg(Status.MSG_NOUSER);
+			return result;
+		}
+
+		String salt = user.getSalt();
+		String md5DigestAsHex = EncryptionUtils.MD5digest(pwd, salt);
+		if (!md5DigestAsHex.equals(user.getPasswordMD5())) {
+			result.setCode(Status.CODE_UNCORRECT);
+			result.setMsg(Status.MSG_UNCORRECT);
 			return result;
 		}
 
@@ -56,8 +65,10 @@ public class LoginController {
 		login.setUserName(user.getUserName());
 		login.setPhoneNumber(user.getPhoneNumber());
 		login.setEmail(user.getEmail());
-		login.setDeleteFlag(user.isDeleteFlag());
+//		login.setPasswordMD5(user.getPasswordMD5());
+//		login.setSalt(user.getSalt());
 		login.setImage(user.getImage());
+		login.setDeleteFlag(user.isDeleteFlag());
 		login.setVersion(user.getVersion());
 		login.setToken(tokenService.getToken(user));
 		login.setAccessToken(Constants.ACCESS_TOKEN);

@@ -17,12 +17,20 @@ public class UserServiceImpl implements UserService {
 	private UserMapper userMapper;
 
 	@Override
-	public UserEntity findByKeyAndPassword(String password, String phoneNumber, String email) {
+	public UserEntity findByKeyAndPassword(String passwordMD5, String phoneNumber, String email) {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("password", password);
+		params.put("passwordMD5", passwordMD5);
 		params.put("phoneNumber", phoneNumber);
 		params.put("email", email);
 		return userMapper.findByKeyAndPassword(params);
+	}
+
+	@Override
+	public UserEntity findByEmailOrPhone(String email, String phoneNumber) {
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("phoneNumber", phoneNumber);
+		params.put("email", email);
+		return userMapper.findByEmailOrPhone(params);
 	}
 
 	@Override
@@ -45,7 +53,8 @@ public class UserServiceImpl implements UserService {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("userName", user.getUserName());
 		params.put("email", user.getEmail());
-		params.put("password", user.getPassword());
+		params.put("passwordMD5", user.getPasswordMD5());
+		params.put("salt", user.getSalt());
 		return userMapper.addUser(params);
 	}
 

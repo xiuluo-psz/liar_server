@@ -5,9 +5,10 @@ import java.util.Date;
 public class UserEntity {
 	String userId;
 	String userName;
-	String phoneNumber;
 	String email;
-	String password;
+	String phoneNumber;
+	String passwordMD5;
+	String salt;
 	String image;
 	boolean deleteFlag;
 	Date version;
@@ -28,14 +29,6 @@ public class UserEntity {
 		this.userName = userName;
 	}
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -44,12 +37,28 @@ public class UserEntity {
 		this.email = email;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getPasswordMD5() {
+		return passwordMD5;
+	}
+
+	public void setPasswordMD5(String passwordMD5) {
+		this.passwordMD5 = passwordMD5;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 	public String getImage() {
